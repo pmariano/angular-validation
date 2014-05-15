@@ -42,13 +42,21 @@ module.exports = function (grunt) {
                 }
             }
         },
-        connect: {
-            server: {
+        browserSync: {
+            dev: {
+                bsFiles: {
+                    src: ['index.html', 'demo/**', 'dist/angular-validation.js']
+                },
                 options: {
-                    protocol: 'http',
-                    hostname: '*',
-                    port: 8080,
-                    base: ROOT_PATH
+                    host: "localhost",
+                    ports: {
+                        min: 8000,
+                        max: 8100
+                    },
+                    server: {
+                        baseDir: '.'
+                    },
+                    watchTask: true
                 }
             }
         },
