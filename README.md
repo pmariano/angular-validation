@@ -1,9 +1,13 @@
-angular-validation 1.1.2
+angular-validation 1.2.0
 =========================
 [![NPM version](https://badge.fury.io/js/angular-validation.svg)](http://badge.fury.io/js/angular-validation)
 [![Build Status](https://travis-ci.org/huei90/angular-validation.png?branch=master)](https://travis-ci.org/huei90/angular-validation)
 [![devDependency Status](https://david-dm.org/huei90/angular-validation/dev-status.png)](https://david-dm.org/huei90/angular-validation#info=devDependencies)
 [![Gitter chat](https://badges.gitter.im/huei90/angular-validation.png)](https://gitter.im/huei90/angular-validation)
+
+<u>Client-side Validation</u> is easy. <br/>
+That's why **Angular Validation** is here!<br/>
+*Don't let Client-side Validation Crash your project.*<br/>
 
 Requirement
 -----
@@ -352,6 +356,8 @@ When you are done, test it on `http://localhost:8080`
        https://docs.google.com/document/d/192dCUnoIBQ7-vurvPeS9BElGdxfk0Ddcof2KzDDi1Mc/edit
 3. form-angular
        http://www.forms-angular.org/
+4. Html5 form-validation
+       http://www.sitepoint.com/client-side-form-validation-html5/
 
 CHANGELOG
 =====
@@ -377,3 +383,7 @@ $validationProvider.validate($scope.Form); // $scope.Form is html form name `For
 
 `submit` : when user click submit, then start watching using `watch` to validate<br/>
 `submit-only` : when user click `submit`, doesn't validate through `watch` until `submit` button is clicked.
+
+###When using checkValid() manually [#19](https://github.com/huei90/angular-validation/issues/19)###
+
+Before using `checkValid()`, you have to execute `submit` first to get the latest result.
