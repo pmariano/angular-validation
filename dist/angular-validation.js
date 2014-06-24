@@ -350,6 +350,9 @@
                         }
                     };
 
+				if("optional" in attrs && data.length == 0){
+					return valid.success();
+				}
                 // Check with Function
                 if (expressionType === Function) {
                     return $q.all([$validationProvider.getExpression(validation)(value, scope, element, attrs)])
