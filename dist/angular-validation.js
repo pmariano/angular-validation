@@ -350,7 +350,7 @@
                         }
                     };
 
-				if("optional" in attrs && data.length == 0){
+				if("optional" in attrs && value.length == 0){
 					return valid.success();
 				}
                 // Check with Function
