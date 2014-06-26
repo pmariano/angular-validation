@@ -124,7 +124,7 @@
              * @returns {string}
              */
             this.getErrorHTML = function (message) {
-                return '<p class="validation-invalid">' + message + '</p>';
+                return '<span class="validation-invalid">' + message + '</span>';
             };
 
 
@@ -286,9 +286,9 @@
              */
             var validFunc = function (element, validMessage, validation, callback, ctrl) {
                 if ($validationProvider.showSuccessMessage) {
-                    element.next().html($validationProvider.getSuccessHTML(validMessage || $validationProvider.getDefaultMsg(validation).success));
+                    element.getErrorSpan().html($validationProvider.getSuccessHTML(validMessage || $validationProvider.getDefaultMsg(validation).success));
                 } else {
-                    element.next().html('');
+                    element.getErrorSpan().html('');
                 }
                 ctrl.$setValidity(ctrl.$name, true);
                 if (callback) callback();
@@ -308,9 +308,9 @@
              */
             var invalidFunc = function (element, validMessage, validation, callback, ctrl) {
                 if ($validationProvider.showErrorMessage) {
-                    element.next().html($validationProvider.getErrorHTML(validMessage || $validationProvider.getDefaultMsg(validation).error));
+                    element.getErrorSpan().html($validationProvider.getErrorHTML(validMessage || $validationProvider.getDefaultMsg(validation).error));
                 } else {
-                    element.next().html('');
+                    element.getErrorSpan().html('');
                 }
                 ctrl.$setValidity(ctrl.$name, false);
                 if (callback) callback();
@@ -353,6 +353,7 @@
 				if("optional" in attrs && value.length == 0){
 					return valid.success();
 				}
+
                 // Check with Function
                 if (expressionType === Function) {
                     return $q.all([$validationProvider.getExpression(validation)(value, scope, element, attrs)])
@@ -395,6 +396,10 @@
                     invalidCallback: '&'
                 },
                 link: function (scope, element, attrs, ctrl) {
+					element.getErrorSpan = function(val){
+						return this.parent().siblings("span");
+					};
+
 
                     /**
                      * watch
@@ -422,7 +427,8 @@
                     /**
                      * Valid/Invalid Message
                      */
-                    element.after('<span></span>');
+   //                 element.after('<span></span>');
+					element.parent().before('<span></span>');
 
                     /**
                      * Set Validity to false when Initial
@@ -447,7 +453,7 @@
                         ctrl.$setPristine();
                         ctrl.$setValidity(ctrl.$name, false);
                         ctrl.$render();
-                        element.next().html('');
+                        element.getErrorSpan().html('');
                     });
 
                     /**
@@ -530,7 +536,7 @@
                                 ctrl.$setViewValue(ctrl.$viewValue);
                             } else if (ctrl.$pristine) {
                                 // Don't validate form when the input is clean(pristine)
-                                element.next().html('');
+                                element.getErrorSpan().html('');
                                 return;
                             }
                             checkValidation(scope, element, attrs, ctrl, validation, value);
@@ -543,7 +549,7 @@
                          * Don't showup the validation Message
                          */
                         attrs.$observe('noValidationMessage', function (value) {
-                            var el = element.next();
+                            var el = element.getErrorSpan();
                             if (value == "true" || value == true) {
                                 el.css('display', 'none');
                             } else if (value == "false" || value == false) {
